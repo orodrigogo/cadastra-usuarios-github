@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
@@ -67,6 +67,11 @@ export default class User extends Component {
     this.setState({ refreshing: true, stars: [] }, this.load);
   };
 
+  openPage = repository => {
+    const { navigation } = this.props;
+    navigation.navigate('Repository', { repository });
+  };
+
   render() {
     const { stars, loading, refreshing } = this.state;
     const { navigation } = this.props;
@@ -93,13 +98,15 @@ export default class User extends Component {
           data={stars}
           keyExtractor={star => String(star.id)}
           renderItem={({ item }) => (
-            <Starred>
-              <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-              <Info>
-                <Title>{item.name}</Title>
-                <Author>{item.owner.login}</Author>
-              </Info>
-            </Starred>
+            <TouchableOpacity onPress={() => this.openPage(item)}>
+              <Starred>
+                <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+                <Info>
+                  <Title>{item.name}</Title>
+                  <Author>{item.owner.login}</Author>
+                </Info>
+              </Starred>
+            </TouchableOpacity>
           )}
         />
       </Container>
