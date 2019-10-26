@@ -1,3 +1,7 @@
-<p align="center">
+<div align="center">
+
+
 ![alt text](preview-app.gif)
-</p>
+
+
+</div>
