@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
-import AsyncStorage from '@react-native-community/async-storage';
 import api from '../../services/api';
 
 import {
@@ -20,14 +19,6 @@ import {
 } from './styles';
 
 export default class User extends Component {
-  state = {
-    stars: [],
-    userSelected: [],
-    loading: true,
-    page: 1,
-    refreshing: false,
-  };
-
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam('user').name,
   });
@@ -36,6 +27,13 @@ export default class User extends Component {
     navigation: PropTypes.shape({
       getParam: PropTypes.func,
     }).isRequired,
+  };
+
+  state = {
+    stars: [],
+    loading: true,
+    page: 1,
+    refreshing: false,
   };
 
   async componentDidMount() {
@@ -65,6 +63,10 @@ export default class User extends Component {
     });
   };
 
+  refreshList = () => {
+    this.setState({ refreshing: true, stars: [] }, this.load);
+  };
+
   render() {
     const { stars, loading, refreshing } = this.state;
     const { navigation } = this.props;
@@ -86,7 +88,8 @@ export default class User extends Component {
         <Stars
           onEndReachedThreshold={0.2} // Carrega mais itens quando chegar em 20% do fim
           onEndReached={this.loadMore} // Função que carrega mais itens
-          refreshing={refreshing}
+          onRefresh={this.refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
+          refreshing={refreshing} // Variável que armazena um estado true/false que representa se a lista está atualizando
           data={stars}
           keyExtractor={star => String(star.id)}
           renderItem={({ item }) => (
