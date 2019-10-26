@@ -69,3 +69,9 @@ export const Author = styled.Text`
   margin-top: 2px;
   color: #999;
 `;
+
+export const ContainerLoad = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
