@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../../services/api';
 
 import {
@@ -19,6 +20,7 @@ import {
 export default class User extends Component {
   state = {
     stars: [],
+    userSelected: [],
   };
 
   static navigationOptions = ({ navigation }) => ({

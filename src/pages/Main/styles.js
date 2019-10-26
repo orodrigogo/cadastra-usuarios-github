@@ -86,3 +86,14 @@ export const ProfileButtonText = styled.Text`
   color: #fff;
   text-transform: uppercase;
 `;
+export const UnfollowButton = styled(RectButton)`
+  color: #fff;
+  align-self: flex-end;
+  background: #7159c1;
+  padding: 5px 10px;
+  border-radius: 5px;
+`;
+
+export const UnfollowButtonText = styled.Text`
+  color: #fff;
+`;

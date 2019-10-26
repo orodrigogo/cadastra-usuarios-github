@@ -18,6 +18,8 @@ import {
   Bio,
   ProfileButton,
   ProfileButtonText,
+  UnfollowButton,
+  UnfollowButtonText,
 } from './styles';
 
 export default class Main extends Component {
@@ -57,6 +59,16 @@ export default class Main extends Component {
   handleNavigate = user => {
     const { navigation } = this.props;
     navigation.navigate('User', { user });
+  };
+
+  handleRemoveUser = async user => {
+    const { users } = this.state;
+
+    const filtered = users.filter(value => {
+      return value !== user;
+    });
+
+    this.setState({ users: filtered });
   };
 
   handleAddUser = async () => {
@@ -111,6 +123,9 @@ export default class Main extends Component {
           keyExtractor={user => user.login}
           renderItem={({ item }) => (
             <User>
+              <UnfollowButton onPress={() => this.handleRemoveUser(item)}>
+                <UnfollowButtonText>X</UnfollowButtonText>
+              </UnfollowButton>
               <Avatar source={{ uri: item.avatar }} />
               <Name>{item.name}</Name>
               <Bio>{item.bio}</Bio>
